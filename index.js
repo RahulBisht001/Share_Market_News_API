@@ -4,7 +4,7 @@ const app = express()
 
 const axios = require('axios')
 const cheerio = require('cheerio')
-const { response } = require('express')
+
 
 
 
@@ -43,7 +43,7 @@ const newspapers = [
         base: 'https://www.livemint.com/'
     },
     {
-        name: 'Economics Times Market ',
+        name: 'Economics Times Market',
         address: 'https://economictimes.indiatimes.com/markets',
         base: 'https://economictimes.indiatimes.com/'
     },
@@ -62,6 +62,36 @@ const newspapers = [
         address: 'https://www.thehindubusinessline.com/',
         base: 'https://www.thehindubusinessline.com/'
     },
+    {
+        name: 'Bloomberg Quint',
+        address: 'https://www.bqprime.com/',
+        base: 'https://www.bqprime.com/'
+    },
+    {
+        name: 'Business Standard',
+        address: 'https://www.business-standard.com/',
+        base: 'https://www.business-standard.com/'
+    },
+    {
+        name: 'Financial Express',
+        address: 'https://www.financialexpress.com/',
+        base: 'https://www.financialexpress.com/'
+    },
+    {
+        name: 'Capital Market',
+        address: 'https://www.capitalmarket.com/',
+        base: 'https://www.capitalmarket.com/'
+    },
+    {
+        name: 'Equity Master',
+        address: 'https://www.equitymaster.com/',
+        base: 'https://www.equitymaster.com/'
+    },
+    {
+        name: 'Business Today',
+        address: 'https://www.businesstoday.in/',
+        base: 'https://www.businesstoday.in/'
+    },
 ]
 
 newspapers.forEach(newspaper => {
@@ -77,10 +107,12 @@ newspapers.forEach(newspaper => {
                     let Title = $(this).text()
                     Title = Title.replace(/\s+/g, ' ').trim();
 
-                    let URL = $(this).attr('href')
-                    if (URL.substring(0, 7) != 'https:/')
-                        URL = newspaper.base + URL
 
+                    let URL = $(this).attr('href')
+                    if (URL != null) {
+                        if (URL.substring(0, 7) != 'https:/')
+                            URL = newspaper.base + URL
+                    }
                     articles.push({
                         Title,
                         URL,
@@ -90,7 +122,6 @@ newspapers.forEach(newspaper => {
         })
         .catch((err) => {
             console.log(err)
-
         })
 })
 
@@ -120,10 +151,12 @@ app.get('/marketNews/:newspaperId', (req, res) => {
                     let Title = $(this).text()
                     Title = Title.replace(/\s+/g, ' ').trim();
 
-                    let URL = $(this).attr('href')
-                    if (URL.substring(0, 7) != 'https:/')
-                        URL = newspaperId + URL
 
+                    let URL = $(this).attr('href')
+                    if (URL != null) {
+                        if (URL.substring(0, 7) != 'https:/')
+                            URL = newspaperId + URL
+                    }
                     specificArticles.push({
                         Title,
                         URL,
